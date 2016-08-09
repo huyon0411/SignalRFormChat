@@ -13,15 +13,28 @@ namespace TaskNotify.Hubs
     [HubName("NotifyHub")]
     public class HubNotify : Hub
     {
+        /// <summary>
+        /// connect users List
+        /// </summary>
         public static List<UserInfo> users = new List<UserInfo>();
+
+        /// <summary>
+        /// message List. 
+        /// Todo: remove it.
+        /// </summary>
         public static List<Notify> notifies = new List<Notify>();
         public void Hello()
         {
             Clients.All.hello();
         }
 
-
-
+        /// <summary>
+        /// [Call]Join
+        /// </summary>
+        /// <param name="arg"></param>
+        /// <remarks>
+        /// Call when User Login.
+        /// </remarks>
         public void Join(JoinArg arg)
         {
             string cd = arg.Cd;

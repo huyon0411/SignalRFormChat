@@ -132,6 +132,7 @@
       <DependentUpon>FrmMessages.cs</DependentUpon>
     </Compile>
     <Compile Include="Common\HubProxyWrapper.cs" />
+    <Compile Include="HubProxy\NotifyHubProxy.cs" />
     <Compile Include="Hubs\HubNotify.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

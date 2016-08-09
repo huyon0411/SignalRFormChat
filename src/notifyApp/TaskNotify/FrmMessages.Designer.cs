@@ -39,6 +39,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.lstmember = new System.Windows.Forms.ListBox();
             this.lblReceive = new System.Windows.Forms.Label();
+            this.表示ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsTasks.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,15 +51,17 @@
             this.niTask.Text = "notifyIcon1";
             this.niTask.Visible = true;
             this.niTask.BalloonTipClicked += new System.EventHandler(this.niTask_BalloonTipClicked);
+            this.niTask.DoubleClick += new System.EventHandler(this.niTask_DoubleClick);
             // 
             // cmsTasks
             // 
             this.cmsTasks.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.終了ToolStripMenuItem,
             this.確認ToolStripMenuItem,
-            this.再接続ToolStripMenuItem});
+            this.再接続ToolStripMenuItem,
+            this.表示ToolStripMenuItem});
             this.cmsTasks.Name = "cmsTasks";
-            this.cmsTasks.Size = new System.Drawing.Size(111, 70);
+            this.cmsTasks.Size = new System.Drawing.Size(111, 92);
             // 
             // 終了ToolStripMenuItem
             // 
@@ -129,6 +132,13 @@
             this.lblReceive.TabIndex = 4;
             this.lblReceive.Text = "label1";
             // 
+            // 表示ToolStripMenuItem
+            // 
+            this.表示ToolStripMenuItem.Name = "表示ToolStripMenuItem";
+            this.表示ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.表示ToolStripMenuItem.Text = "表示";
+            this.表示ToolStripMenuItem.Click += new System.EventHandler(this.表示ToolStripMenuItem_Click);
+            // 
             // FrmMessages
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -159,6 +169,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ListBox lstmember;
         private System.Windows.Forms.Label lblReceive;
+        private System.Windows.Forms.ToolStripMenuItem 表示ToolStripMenuItem;
     }
 }
 

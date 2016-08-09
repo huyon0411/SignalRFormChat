@@ -7,9 +7,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 [assembly: OwinStartup(typeof(TaskNotify.Common.StartUp))]
 namespace TaskNotify.Common
 {
+    /// <summary>
+    /// Owin StartUp Class
+    /// SignalR Setting only.
+    /// </summary>
     class StartUp
     {
         public void Configuration(IAppBuilder app)
@@ -19,23 +24,45 @@ namespace TaskNotify.Common
         }
     }
 
+    /// <summary>
+    /// SignalR SelfHost Server 
+    /// </summary>
     public class SignalrSelfHost : IDisposable
     {
+        /// <summary>
+        /// Owin WebApp Server.
+        /// </summary>
         private IDisposable server = null;
+
+        /// <summary>
+        /// HostUrl read Properties.Settings.Default.ServerPort.
+        /// </summary>
         public static string HostUrl { get { return string.Format(HostUrlStr, Properties.Settings.Default.ServerPort); } }
 
+        /// <summary>
+        /// HostUrl Template
+        /// </summary>
         public static string HostUrlStr = "http://localhost:{0}/";
 
+        /// <summary>
+        /// Dispose
+        /// </summary>
         public void Dispose()
         {
             this.Stop();
         }
 
+        /// <summary>
+        /// Start The Server
+        /// </summary>
         public void Start()
         {
             server = WebApp.Start(HostUrl);
         }
 
+        /// <summary>
+        /// Stop The Server
+        /// </summary>
         public void Stop()
         {
             if (server != null)
@@ -49,4 +76,5 @@ namespace TaskNotify.Common
         }
 
     }
+
 }
