@@ -35,12 +35,22 @@
             this.終了ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.確認ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.再接続ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.lstmember = new System.Windows.Forms.ListBox();
-            this.lblReceive = new System.Windows.Forms.Label();
             this.表示ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.txtSyslog = new System.Windows.Forms.TextBox();
+            this.lstmember = new System.Windows.Forms.ListBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btnLogClear = new System.Windows.Forms.Button();
+            this.lblReceive = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.cmsTasks.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTask
@@ -84,6 +94,13 @@
             this.再接続ToolStripMenuItem.Text = "再接続";
             this.再接続ToolStripMenuItem.Click += new System.EventHandler(this.再接続ToolStripMenuItem_Click);
             // 
+            // 表示ToolStripMenuItem
+            // 
+            this.表示ToolStripMenuItem.Name = "表示ToolStripMenuItem";
+            this.表示ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.表示ToolStripMenuItem.Text = "表示";
+            this.表示ToolStripMenuItem.Click += new System.EventHandler(this.表示ToolStripMenuItem_Click);
+            // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -96,65 +113,125 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // textBox1
+            // tabControl1
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Font = new System.Drawing.Font("メイリオ", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.textBox1.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.textBox1.Location = new System.Drawing.Point(0, 240);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(636, 85);
-            this.textBox1.TabIndex = 2;
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Location = new System.Drawing.Point(0, 1);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(636, 324);
+            this.tabControl1.TabIndex = 5;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.lblReceive);
+            this.tabPage1.Controls.Add(this.textBox1);
+            this.tabPage1.Controls.Add(this.lstmember);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(628, 298);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "main";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.txtSyslog);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(628, 298);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "syslog";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // txtSyslog
+            // 
+            this.txtSyslog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtSyslog.Location = new System.Drawing.Point(3, 3);
+            this.txtSyslog.Multiline = true;
+            this.txtSyslog.Name = "txtSyslog";
+            this.txtSyslog.ReadOnly = true;
+            this.txtSyslog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtSyslog.Size = new System.Drawing.Size(622, 292);
+            this.txtSyslog.TabIndex = 0;
             // 
             // lstmember
             // 
-            this.lstmember.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lstmember.Dock = System.Windows.Forms.DockStyle.Top;
             this.lstmember.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.lstmember.ItemHeight = 23;
-            this.lstmember.Location = new System.Drawing.Point(0, 1);
+            this.lstmember.Location = new System.Drawing.Point(3, 3);
             this.lstmember.Name = "lstmember";
             this.lstmember.ScrollAlwaysVisible = true;
-            this.lstmember.Size = new System.Drawing.Size(636, 96);
-            this.lstmember.TabIndex = 1;
+            this.lstmember.Size = new System.Drawing.Size(622, 73);
+            this.lstmember.TabIndex = 2;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.btnLogClear);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(628, 107);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "tabPage3";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // btnLogClear
+            // 
+            this.btnLogClear.Location = new System.Drawing.Point(6, 6);
+            this.btnLogClear.Name = "btnLogClear";
+            this.btnLogClear.Size = new System.Drawing.Size(96, 35);
+            this.btnLogClear.TabIndex = 0;
+            this.btnLogClear.Text = "Clear syslog";
+            this.btnLogClear.UseVisualStyleBackColor = true;
+            this.btnLogClear.Click += new System.EventHandler(this.btnLogClear_Click);
             // 
             // lblReceive
             // 
-            this.lblReceive.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblReceive.Location = new System.Drawing.Point(7, 102);
+            this.lblReceive.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblReceive.Location = new System.Drawing.Point(3, 76);
             this.lblReceive.Name = "lblReceive";
-            this.lblReceive.Size = new System.Drawing.Size(618, 121);
-            this.lblReceive.TabIndex = 4;
+            this.lblReceive.Size = new System.Drawing.Size(622, 109);
+            this.lblReceive.TabIndex = 6;
             this.lblReceive.Text = "label1";
             // 
-            // 表示ToolStripMenuItem
+            // textBox1
             // 
-            this.表示ToolStripMenuItem.Name = "表示ToolStripMenuItem";
-            this.表示ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
-            this.表示ToolStripMenuItem.Text = "表示";
-            this.表示ToolStripMenuItem.Click += new System.EventHandler(this.表示ToolStripMenuItem_Click);
+            this.textBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.textBox1.Font = new System.Drawing.Font("メイリオ", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.textBox1.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.textBox1.Location = new System.Drawing.Point(3, 188);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(622, 107);
+            this.textBox1.TabIndex = 5;
             // 
             // FrmMessages
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(637, 387);
-            this.Controls.Add(this.lblReceive);
-            this.Controls.Add(this.lstmember);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button1);
             this.Name = "FrmMessages";
             this.Text = "＊";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMessages_FormClosing);
             this.Load += new System.EventHandler(this.FrmMessages_Load);
             this.cmsTasks.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -166,10 +243,16 @@
         private System.Windows.Forms.ToolStripMenuItem 確認ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 再接続ToolStripMenuItem;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ListBox lstmember;
-        private System.Windows.Forms.Label lblReceive;
         private System.Windows.Forms.ToolStripMenuItem 表示ToolStripMenuItem;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.ListBox lstmember;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TextBox txtSyslog;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Button btnLogClear;
+        private System.Windows.Forms.Label lblReceive;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

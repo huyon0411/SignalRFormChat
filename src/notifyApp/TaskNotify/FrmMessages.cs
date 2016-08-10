@@ -27,21 +27,36 @@ namespace TaskNotify
         public FrmMessages()
         {
             InitializeComponent();
-
-            if (Properties.Settings.Default.IsServer)
+            try
             {
-                svr = new SignalrSelfHost();
-                svr.Start();
+                if (Properties.Settings.Default.IsServer)
+                {
+                    svr = new SignalrSelfHost();
+                    svr.Start();
+                }
+
+                this.ShowInTaskbar = false;
+                this.WindowState = FormWindowState.Minimized;
+
+                this.hub = new NotifyHubProxy(Properties.Settings.Default.ServerUrl, NotifyHubProxy.HubName);
+                this.hub.OnReloadNotifies += Hub_OnReloadNotifies;
+                this.hub.OnReloadUserList += Hub_OnReloadUserList;
+
+                this.Join();
             }
+            catch (Exception e)
+            {
+                this.dp(LogUtil.GetExceptionLogStr(e));
+            }
+        }
 
-            this.ShowInTaskbar = false;
-            this.WindowState = FormWindowState.Minimized;
-
-            this.hub = new NotifyHubProxy(Properties.Settings.Default.ServerUrl, NotifyHubProxy.HubName);
-            this.hub.OnReloadNotifies += Hub_OnReloadNotifies;
-            this.hub.OnReloadUserList += Hub_OnReloadUserList;
-
-            this.Join();
+        private void ExCommon_logging(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(()=>{
+                this.txtSyslog.Text += ExCommon.Buffer.ToString();
+                this.txtSyslog.Text += "\n";
+                ExCommon.Buffer.Clear();
+            }));
         }
 
         #endregion
@@ -101,15 +116,24 @@ namespace TaskNotify
         private void FrmMessages_Load(object sender, EventArgs e)
         {
             Hide();
+            ExCommon.Logging += ExCommon_logging;
+            this.dp("Loaded");
         }
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            if (this.lstmember.SelectedItem == null) { return; }
-            string userCd = ((dynamic)this.lstmember.SelectedItem).UserCd;
-            if (userCd == null) { return; }
-            await this.hub.SendMessage(userCd, this.textBox1.Text);
-            this.textBox1.Text = "";
+            try
+            {
+                if (this.lstmember.SelectedItem == null) { return; }
+                string userCd = ((dynamic)this.lstmember.SelectedItem).UserCd;
+                if (userCd == null) { return; }
+                await this.hub.SendMessage(userCd, this.textBox1.Text);
+                this.textBox1.Text = "";
+            }
+            catch (Exception ex)
+            {
+                this.dp(LogUtil.GetExceptionLogStr(ex));
+            }
         }
 
         private void FrmMessages_FormClosing(object sender, FormClosingEventArgs e)
@@ -141,6 +165,7 @@ namespace TaskNotify
 
         private void 表示ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.ShowMsgForm();
         }
 
         private void niTask_BalloonTipClicked(object sender, EventArgs e)
@@ -170,5 +195,9 @@ namespace TaskNotify
 
         #endregion Helper
 
+        private void btnLogClear_Click(object sender, EventArgs e)
+        {
+            this.txtSyslog.Text = "";
+        }
     }
 }

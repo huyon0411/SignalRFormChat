@@ -42,7 +42,7 @@ namespace TaskNotify.Common
         /// <summary>
         /// HostUrl Template
         /// </summary>
-        public static string HostUrlStr = "http://localhost:{0}/";
+        public static string HostUrlStr = "http://+:{0}/";
 
         /// <summary>
         /// Dispose
@@ -57,6 +57,7 @@ namespace TaskNotify.Common
         /// </summary>
         public void Start()
         {
+            this.dp("Start Server URL:"+HostUrl);
             server = WebApp.Start(HostUrl);
         }
 

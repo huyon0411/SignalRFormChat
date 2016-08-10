@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TaskNotify.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ServerUrl" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://localhost:8080/</Value>
-    </Setting>
     <Setting Name="ServerPort" Type="System.String" Scope="User">
       <Value Profile="(Default)">8080</Value>
     </Setting>
@@ -13,6 +10,9 @@
     </Setting>
     <Setting Name="UserName" Type="System.String" Scope="User">
       <Value Profile="(Default)">てすたーわん</Value>
+    </Setting>
+    <Setting Name="ServerUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://localhost:8080/</Value>
     </Setting>
     <Setting Name="IsServer" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

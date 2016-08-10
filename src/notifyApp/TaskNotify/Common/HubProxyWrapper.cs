@@ -9,19 +9,6 @@ using System.Threading.Tasks;
 namespace TaskNotify.Common
 {
     /// <summary>
-    /// Extend Debug Output
-    /// </summary>
-    public static class ExCommon
-    {
-        public static void dp<T>(this object anyClass, T o)
-        {
-#if DEBUG
-            System.Diagnostics.Debug.WriteLine(o);
-#endif
-        }
-    }
-
-    /// <summary>
     /// IHubProxy's Wrapper.
     /// it have a HubConnection ... but not checked some Proxy doing.
     /// </summary>
@@ -58,12 +45,20 @@ namespace TaskNotify.Common
         /// <param name="hubName">access hubName</param>
         public HubProxyWrapper(string url, string hubName)
         {
-            this.conn = new HubConnection(url);
-            this.isParentConn = true;
-            this.proxy = conn.CreateHubProxy(hubName);
-            this.dp(string.Format("Start hubProxy:{0} /:/ {1}", url, hubName));
-            RegistServerMethod();
-            conn.Start().Wait();
+            try
+            {
+                this.conn = new HubConnection(url);
+                this.isParentConn = true;
+                this.proxy = conn.CreateHubProxy(hubName);
+                this.dp(string.Format("Start hubProxy:{0} /:/ {1}", url, hubName));
+                RegistServerMethod();
+                conn.Start().Wait();
+
+            }
+            catch (Exception e)
+            {
+                this.dp(LogUtil.GetExceptionLogStr(e));
+            }
         }
 
         /// <summary>
@@ -73,9 +68,16 @@ namespace TaskNotify.Common
         /// <param name="hubName"></param>
         public HubProxyWrapper(HubConnection conn, string hubName)
         {
-            this.conn = conn;
-            this.isParentConn = false;
-            this.proxy = conn.CreateHubProxy(hubName);
+            try
+            {
+                this.conn = conn;
+                this.isParentConn = false;
+                this.proxy = conn.CreateHubProxy(hubName);
+            }
+            catch (Exception e)
+            {
+                this.dp(LogUtil.GetExceptionLogStr(e));
+            }
         }
 
         /// <summary>
