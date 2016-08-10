@@ -50,14 +50,14 @@ namespace TaskNotify.Common
                 this.conn = new HubConnection(url);
                 this.isParentConn = true;
                 this.proxy = conn.CreateHubProxy(hubName);
-                this.dp(string.Format("Start hubProxy:{0} /:/ {1}", url, hubName));
+                this.WriteTrace(string.Format("Start hubProxy:{0} /:/ {1}", url, hubName));
                 RegistServerMethod();
                 conn.Start().Wait();
 
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                this.dp(LogUtil.GetExceptionLogStr(e));
+                ex.WriteExcept();
             }
         }
 
@@ -74,9 +74,9 @@ namespace TaskNotify.Common
                 this.isParentConn = false;
                 this.proxy = conn.CreateHubProxy(hubName);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                this.dp(LogUtil.GetExceptionLogStr(e));
+                ex.WriteExcept();
             }
         }
 
@@ -87,7 +87,7 @@ namespace TaskNotify.Common
         {
             if (this.isParentConn && this.conn.State == Microsoft.AspNet.SignalR.Client.ConnectionState.Connected)
             {
-                this.dp("Stop hubProxy");
+                this.WriteTrace("Stop hubProxy");
                 this.conn.Stop();
             }
         }
@@ -101,7 +101,7 @@ namespace TaskNotify.Common
         protected IDisposable On<T>(Action<T> eventExecute)
         {
             string eventName = eventExecute.Method.Name;
-            this.dp("On:" + eventName);
+            this.WriteTrace("On:" + eventName);
             return proxy.On<T>(eventName, eventExecute);
         }
 
@@ -126,7 +126,7 @@ namespace TaskNotify.Common
         /// <returns></returns>
         public Task Invoke<T>(Nullable<T> args = null, bool sendNull = false, [CallerMemberName] string method = null) where T : struct
         {
-            this.dp("Invoke:" + method);
+            this.WriteTrace("Invoke:" + method);
             if (args == null && !sendNull)
             {
                 return proxy.Invoke(method);
@@ -144,7 +144,7 @@ namespace TaskNotify.Common
         /// <returns></returns>
         public Task Invoke<T>(T args = null, bool sendNull = false, [CallerMemberName] string method = null) where T : class
         {
-            this.dp("Invoke:" + method);
+            this.WriteTrace("Invoke:" + method);
             if (args == null && !sendNull)
             {
                 return proxy.Invoke(method);
@@ -161,7 +161,7 @@ namespace TaskNotify.Common
         /// <returns></returns>
         public Task Invoke(string args = null, bool sendNull = false, [CallerMemberName] string method = null)
         {
-            this.dp("Invoke:" + method);
+            this.WriteTrace("Invoke:" + method);
             if (args == null && !sendNull)
             {
                 return proxy.Invoke(method);

@@ -44,9 +44,9 @@ namespace TaskNotify
 
                 this.Join();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                this.dp(LogUtil.GetExceptionLogStr(e));
+                ex.WriteExcept();
             }
         }
 
@@ -117,7 +117,7 @@ namespace TaskNotify
         {
             Hide();
             ExCommon.Logging += ExCommon_logging;
-            this.dp("Loaded");
+            this.WriteTrace("Loaded");
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -132,7 +132,7 @@ namespace TaskNotify
             }
             catch (Exception ex)
             {
-                this.dp(LogUtil.GetExceptionLogStr(ex));
+                ex.WriteExcept();
             }
         }
 

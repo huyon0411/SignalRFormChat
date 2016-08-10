@@ -57,7 +57,7 @@ namespace TaskNotify.Common
         /// </summary>
         public void Start()
         {
-            this.dp("Start Server URL:"+HostUrl);
+            this.WriteTrace("Start Server URL:" + HostUrl);
             server = WebApp.Start(HostUrl);
         }
 
