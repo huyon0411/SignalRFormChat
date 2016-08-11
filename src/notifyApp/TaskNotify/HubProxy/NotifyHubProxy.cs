@@ -48,9 +48,9 @@ namespace TaskNotify.HubProxy
 
         #region method Call from Server
 
-        private void GetChangeUser()
+        private async void GetChangeUser()
         {
-            this.GetUsersList();
+            await this.GetUsersList();
         }
 
         private void ReloadUserList(List<UserInfo> users)
@@ -70,52 +70,52 @@ namespace TaskNotify.HubProxy
 
         #region server method call
 
-        public Task ReadNotify(long seq)
+        public async Task ReadNotify(long seq)
         {
             var arg = new HubNotifyArgs.ReadNotifyArg()
             {
                 Seq = seq
             };
-            return this.Invoke(arg);
+            await this.Invoke(arg);
         }
 
-        public Task GetNotifies()
+        public async Task GetNotifies()
         {
-            return this.Invoke();
+            await this.Invoke();
         }
 
-        public Task Join(string cd, string name)
+        public async Task Join(string cd, string name)
         {
             var arg = new HubNotifyArgs.JoinArg()
             {
                 Cd = cd,
                 Name = name
             };
-            return this.Invoke(arg);
+            await this.Invoke(arg);
         }
 
-        public Task SendMessage(string cd, string message)
+        public async Task SendMessage(string cd, string message)
         {
             var arg = new HubNotifyArgs.SendMessageArg()
             {
                 ToCd = cd,
                 Message = message
             };
-            return this.Invoke(arg);
+            await this.Invoke(arg);
         }
 
-        public Task GetUsersList()
+        public async Task GetUsersList()
         {
-            return this.Invoke();
+            await this.Invoke();
         }
 
-        public Task Leave(string userCd)
+        public async Task Leave(string userCd)
         {
             var arg = new HubNotifyArgs.LeaveArg()
             {
                 UserCd = userCd
             };
-            return this.Invoke(arg);
+            await this.Invoke(arg);
         }
         #endregion server method call
 

@@ -160,12 +160,12 @@ namespace TaskNotify
 
         #region Form event
 
-        private void FrmMessages_Load(object sender, EventArgs e)
+        private async void FrmMessages_Load(object sender, EventArgs e)
         {
             Hide();
             ExCommon.Logging += ExCommon_logging;
             this.WriteTrace("Loaded");
-            this.Join();
+            await this.Join();
         }
 
         private async void btnSendMessage_Click(object sender, EventArgs e)
@@ -240,28 +240,28 @@ namespace TaskNotify
 
         private void 確認ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.hub.GetNotifies();
+            this.hub.GetNotifies().ConfigureAwait(false);
         }
 
-        private void 再接続ToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void 再接続ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Reconnect();
+            await this.Reconnect();
         }
 
-        private void Reconnect()
+        private async Task Reconnect()
         {
             this.WriteTrace("再接続します...");
-            this.LeaveChat();
-            this.Disconnect();
+            await this.LeaveChat();
+            await this.Disconnect();
             this.Connect();
-            this.Join();
+            await this.Join();
             this.WriteTrace("再接続しました");
 
         }
 
-        private void LeaveChat()
+        private async Task LeaveChat()
         {
-            this.hub.Leave(Properties.Settings.Default.UserCd);
+            await this.hub.Leave(Properties.Settings.Default.UserCd);
         }
 
         private void 表示ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -269,9 +269,9 @@ namespace TaskNotify
             this.ShowMsgForm();
         }
 
-        private void 切断ToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void 切断ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Disconnect();
+            await this.Disconnect();
         }
 
         private void niTask_BalloonTipClicked(object sender, EventArgs e)
@@ -294,9 +294,9 @@ namespace TaskNotify
             this.ShowInTaskbar = true;
         }
 
-        private Task Join()
+        private async Task Join()
         {
-            return this.hub.Join(Properties.Settings.Default.UserCd, Properties.Settings.Default.UserName);
+            await this.hub.Join(Properties.Settings.Default.UserCd, Properties.Settings.Default.UserName);
         }
 
         private void AddTab(UserInfo user)
@@ -330,9 +330,9 @@ namespace TaskNotify
             return txt;
         }
 
-        private void Disconnect()
+        private async Task Disconnect()
         {
-            this.LeaveChat();
+            await this.LeaveChat();
             this.hub.Disconnect();
         }
 

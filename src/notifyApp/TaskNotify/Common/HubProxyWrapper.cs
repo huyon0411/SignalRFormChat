@@ -50,9 +50,9 @@ namespace TaskNotify.Common
                 this.conn = new HubConnection(url);
                 this.isParentConn = true;
                 this.proxy = conn.CreateHubProxy(hubName);
-                this.WriteTrace(string.Format("Start hubProxy:{0} /:/ {1}", url, hubName));
                 RegistServerMethod();
                 this.Connect();
+                this.WriteTrace(string.Format("Start hubProxy:{0} /:/ {1}", url, hubName));
             }
             catch (Exception ex)
             {
@@ -62,7 +62,9 @@ namespace TaskNotify.Common
 
         public void Connect()
         {
+            this.WriteTrace("Start Connection start");
             conn.Start().Wait();
+            this.WriteTrace("End Connection start");
         }
 
         /// <summary>
@@ -87,8 +89,16 @@ namespace TaskNotify.Common
         {
             if (this.isParentConn && this.conn.State == Microsoft.AspNet.SignalR.Client.ConnectionState.Connected)
             {
-                this.WriteTrace("Stop hubProxy");
-                this.conn.Stop();
+                this.WriteTrace("Disconnect Stop hubProxy");
+                try
+                {
+                    this.conn.Stop();
+                }
+                catch (Exception ex)
+                {
+                    ex.WriteExcept();
+                }
+
             }
         }
         /// <summary>
@@ -131,11 +141,11 @@ namespace TaskNotify.Common
         // To prepare the argument class you were it.
         // Because it is beautiful better of over there.
 
-        public Task Invoke(bool sendNull = false, [CallerMemberName] string method = null)
+        public async Task Invoke(bool sendNull = false, [CallerMemberName] string method = null)
         {
-            if (this.conn.State != ConnectionState.Connected) { return Task.Run(() => { }); }
+            if (this.conn.State != ConnectionState.Connected) { return; }
             this.WriteTrace("Invoke:" + method);
-            return proxy.Invoke(method);
+            await proxy.Invoke(method);
         }
 
 
@@ -147,15 +157,16 @@ namespace TaskNotify.Common
         /// <param name="sendNull"></param>
         /// <param name="method"></param>
         /// <returns></returns>
-        public Task Invoke<T>(Nullable<T> args, bool sendNull = false, [CallerMemberName] string method = null) where T : struct
+        public async Task Invoke<T>(Nullable<T> args, bool sendNull = false, [CallerMemberName] string method = null) where T : struct
         {
-            if (this.conn.State != ConnectionState.Connected) { return Task.Run(() => { }); }
+            if (this.conn.State != ConnectionState.Connected) { return; }
             this.WriteTrace("Invoke:" + method);
             if (args == null && !sendNull)
             {
-                return proxy.Invoke(method);
+                await proxy.Invoke(method);
+                return;
             }
-            return proxy.Invoke(method, args.Value);
+            await proxy.Invoke(method, args.Value);
         }
 
         /// <summary>
@@ -166,15 +177,16 @@ namespace TaskNotify.Common
         /// <param name="sendNull"></param>
         /// <param name="method"></param>
         /// <returns></returns>
-        public Task Invoke<T>(T args, bool sendNull = false, [CallerMemberName] string method = null) where T : class
+        public async Task Invoke<T>(T args, bool sendNull = false, [CallerMemberName] string method = null) where T : class
         {
-            if (this.conn.State != ConnectionState.Connected) { return Task.Run(() => { }); }
+            if (this.conn.State != ConnectionState.Connected) { return; }
             this.WriteTrace("Invoke:" + method);
             if (args == null && !sendNull)
             {
-                return proxy.Invoke(method);
+                await proxy.Invoke(method);
+                return;
             }
-            return proxy.Invoke(method, args);
+            await proxy.Invoke(method, args);
         }
 
         /// <summary>
@@ -184,15 +196,16 @@ namespace TaskNotify.Common
         /// <param name="sendNull"></param>
         /// <param name="method"></param>
         /// <returns></returns>
-        public Task Invoke(string args, bool sendNull = false, [CallerMemberName] string method = null)
+        public async Task Invoke(string args, bool sendNull = false, [CallerMemberName] string method = null)
         {
-            if (this.conn.State != ConnectionState.Connected) { return Task.Run(() => { }); }
+            if (this.conn.State != ConnectionState.Connected) { return; }
             this.WriteTrace("Invoke:" + method);
             if (args == null && !sendNull)
             {
-                return proxy.Invoke(method);
+                await proxy.Invoke(method);
+                return;
             }
-            return proxy.Invoke(method, args);
+            await proxy.Invoke(method, args);
         }
     }
 }
