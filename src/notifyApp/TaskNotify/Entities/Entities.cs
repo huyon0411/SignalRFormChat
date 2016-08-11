@@ -59,5 +59,17 @@ namespace Entities
             public string Message { get; set; }
 
         }
+
+        [DataContract]
+        public class LeaveArg
+        {
+            [DataMember(Name = "UserCd")]
+            public string UserCd { get; set; }
+        }
+        public class ReadNotifyArg
+        {
+            [DataMember(Name = "Seq")]
+            public long Seq { get; set; }
+        }
     }
 }

@@ -72,7 +72,11 @@ namespace TaskNotify.HubProxy
 
         public Task ReadNotify(long seq)
         {
-            return this.Invoke((long?)seq);
+            var arg = new HubNotifyArgs.ReadNotifyArg()
+            {
+                Seq = seq
+            };
+            return this.Invoke(arg);
         }
 
         public Task GetNotifies()
@@ -105,6 +109,14 @@ namespace TaskNotify.HubProxy
             return this.Invoke();
         }
 
+        public Task Leave(string userCd)
+        {
+            var arg = new HubNotifyArgs.LeaveArg()
+            {
+                UserCd = userCd
+            };
+            return this.Invoke(arg);
+        }
         #endregion server method call
 
     }

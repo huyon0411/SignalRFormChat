@@ -52,13 +52,17 @@ namespace TaskNotify.Common
                 this.proxy = conn.CreateHubProxy(hubName);
                 this.WriteTrace(string.Format("Start hubProxy:{0} /:/ {1}", url, hubName));
                 RegistServerMethod();
-                conn.Start().Wait();
-
+                this.Connect();
             }
             catch (Exception ex)
             {
                 ex.WriteExcept();
             }
+        }
+
+        public void Connect()
+        {
+            conn.Start().Wait();
         }
 
         /// <summary>
@@ -79,17 +83,20 @@ namespace TaskNotify.Common
                 ex.WriteExcept();
             }
         }
-
-        /// <summary>
-        /// Dispose
-        /// </summary>
-        public void Dispose()
+        public void Disconnect()
         {
             if (this.isParentConn && this.conn.State == Microsoft.AspNet.SignalR.Client.ConnectionState.Connected)
             {
                 this.WriteTrace("Stop hubProxy");
                 this.conn.Stop();
             }
+        }
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        public void Dispose()
+        {
+            this.Disconnect();
         }
 
         /// <summary>
@@ -126,6 +133,7 @@ namespace TaskNotify.Common
 
         public Task Invoke(bool sendNull = false, [CallerMemberName] string method = null)
         {
+            if (this.conn.State != ConnectionState.Connected) { return Task.Run(() => { }); }
             this.WriteTrace("Invoke:" + method);
             return proxy.Invoke(method);
         }
@@ -141,6 +149,7 @@ namespace TaskNotify.Common
         /// <returns></returns>
         public Task Invoke<T>(Nullable<T> args, bool sendNull = false, [CallerMemberName] string method = null) where T : struct
         {
+            if (this.conn.State != ConnectionState.Connected) { return Task.Run(() => { }); }
             this.WriteTrace("Invoke:" + method);
             if (args == null && !sendNull)
             {
@@ -159,6 +168,7 @@ namespace TaskNotify.Common
         /// <returns></returns>
         public Task Invoke<T>(T args, bool sendNull = false, [CallerMemberName] string method = null) where T : class
         {
+            if (this.conn.State != ConnectionState.Connected) { return Task.Run(() => { }); }
             this.WriteTrace("Invoke:" + method);
             if (args == null && !sendNull)
             {
@@ -176,6 +186,7 @@ namespace TaskNotify.Common
         /// <returns></returns>
         public Task Invoke(string args, bool sendNull = false, [CallerMemberName] string method = null)
         {
+            if (this.conn.State != ConnectionState.Connected) { return Task.Run(() => { }); }
             this.WriteTrace("Invoke:" + method);
             if (args == null && !sendNull)
             {

@@ -33,30 +33,35 @@
             this.niTask = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmsTasks = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.終了ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.確認ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.再接続ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.切断ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.表示ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.確認ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSendMessage = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabmessages = new System.Windows.Forms.TabControl();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.lblReceive = new System.Windows.Forms.TextBox();
             this.txtSendMsg = new System.Windows.Forms.TextBox();
             this.lstmember = new System.Windows.Forms.ListBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtSyslog = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.btnLogClear = new System.Windows.Forms.Button();
-            this.tabmessages = new System.Windows.Forms.TabControl();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.lblReceive = new System.Windows.Forms.TextBox();
-            this.fntdlg = new System.Windows.Forms.FontDialog();
             this.btnFntdlg = new System.Windows.Forms.Button();
+            this.btnLogClear = new System.Windows.Forms.Button();
+            this.fntdlg = new System.Windows.Forms.FontDialog();
             this.cmsTasks.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.tabPage3.SuspendLayout();
             this.tabmessages.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTask
@@ -73,51 +78,85 @@
             // 
             this.cmsTasks.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.終了ToolStripMenuItem,
-            this.確認ToolStripMenuItem,
-            this.再接続ToolStripMenuItem,
-            this.表示ToolStripMenuItem});
+            this.toolStripSeparator2,
+            this.toolStripMenuItem1,
+            this.toolStripSeparator3,
+            this.表示ToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.確認ToolStripMenuItem});
             this.cmsTasks.Name = "cmsTasks";
-            this.cmsTasks.Size = new System.Drawing.Size(111, 92);
+            this.cmsTasks.Size = new System.Drawing.Size(123, 110);
             // 
             // 終了ToolStripMenuItem
             // 
             this.終了ToolStripMenuItem.Name = "終了ToolStripMenuItem";
-            this.終了ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.終了ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.終了ToolStripMenuItem.Text = "終了";
             this.終了ToolStripMenuItem.Click += new System.EventHandler(this.終了ToolStripMenuItem_Click);
             // 
-            // 確認ToolStripMenuItem
+            // toolStripSeparator2
             // 
-            this.確認ToolStripMenuItem.Name = "確認ToolStripMenuItem";
-            this.確認ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
-            this.確認ToolStripMenuItem.Text = "確認";
-            this.確認ToolStripMenuItem.Click += new System.EventHandler(this.確認ToolStripMenuItem_Click);
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(119, 6);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.再接続ToolStripMenuItem,
+            this.切断ToolStripMenuItem});
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(122, 22);
+            this.toolStripMenuItem1.Text = "Connect";
             // 
             // 再接続ToolStripMenuItem
             // 
             this.再接続ToolStripMenuItem.Name = "再接続ToolStripMenuItem";
-            this.再接続ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.再接続ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.再接続ToolStripMenuItem.Text = "再接続";
             this.再接続ToolStripMenuItem.Click += new System.EventHandler(this.再接続ToolStripMenuItem_Click);
+            // 
+            // 切断ToolStripMenuItem
+            // 
+            this.切断ToolStripMenuItem.Name = "切断ToolStripMenuItem";
+            this.切断ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.切断ToolStripMenuItem.Text = "切断";
+            this.切断ToolStripMenuItem.Click += new System.EventHandler(this.切断ToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(119, 6);
             // 
             // 表示ToolStripMenuItem
             // 
             this.表示ToolStripMenuItem.Name = "表示ToolStripMenuItem";
-            this.表示ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
-            this.表示ToolStripMenuItem.Text = "表示";
+            this.表示ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.表示ToolStripMenuItem.Text = "画面表示";
             this.表示ToolStripMenuItem.Click += new System.EventHandler(this.表示ToolStripMenuItem_Click);
             // 
-            // button1
+            // toolStripSeparator1
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(119, 6);
+            // 
+            // 確認ToolStripMenuItem
+            // 
+            this.確認ToolStripMenuItem.Name = "確認ToolStripMenuItem";
+            this.確認ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.確認ToolStripMenuItem.Text = "確認";
+            this.確認ToolStripMenuItem.Click += new System.EventHandler(this.確認ToolStripMenuItem_Click);
+            // 
+            // btnSendMessage
+            // 
+            this.btnSendMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(0, 331);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(636, 54);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "送信";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnSendMessage.Location = new System.Drawing.Point(0, 331);
+            this.btnSendMessage.Name = "btnSendMessage";
+            this.btnSendMessage.Size = new System.Drawing.Size(636, 54);
+            this.btnSendMessage.TabIndex = 3;
+            this.btnSendMessage.Text = "送信";
+            this.btnSendMessage.UseVisualStyleBackColor = true;
+            this.btnSendMessage.Click += new System.EventHandler(this.btnSendMessage_Click);
             // 
             // tabControl1
             // 
@@ -145,6 +184,42 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "main";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabmessages
+            // 
+            this.tabmessages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabmessages.Controls.Add(this.tabPage4);
+            this.tabmessages.Location = new System.Drawing.Point(0, 76);
+            this.tabmessages.Name = "tabmessages";
+            this.tabmessages.SelectedIndex = 0;
+            this.tabmessages.Size = new System.Drawing.Size(621, 106);
+            this.tabmessages.TabIndex = 7;
+            this.tabmessages.TabStop = false;
+            this.tabmessages.SelectedIndexChanged += new System.EventHandler(this.tabmessages_SelectedIndexChanged);
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.lblReceive);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(613, 80);
+            this.tabPage4.TabIndex = 0;
+            this.tabPage4.Text = "all";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // lblReceive
+            // 
+            this.lblReceive.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblReceive.Location = new System.Drawing.Point(3, 3);
+            this.lblReceive.Multiline = true;
+            this.lblReceive.Name = "lblReceive";
+            this.lblReceive.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.lblReceive.Size = new System.Drawing.Size(607, 74);
+            this.lblReceive.TabIndex = 7;
+            this.lblReceive.TabStop = false;
             // 
             // txtSendMsg
             // 
@@ -201,53 +276,8 @@
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(628, 298);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "tabPage3";
+            this.tabPage3.Text = "config";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // btnLogClear
-            // 
-            this.btnLogClear.Location = new System.Drawing.Point(6, 6);
-            this.btnLogClear.Name = "btnLogClear";
-            this.btnLogClear.Size = new System.Drawing.Size(96, 35);
-            this.btnLogClear.TabIndex = 0;
-            this.btnLogClear.Text = "Clear syslog";
-            this.btnLogClear.UseVisualStyleBackColor = true;
-            this.btnLogClear.Click += new System.EventHandler(this.btnLogClear_Click);
-            // 
-            // tabmessages
-            // 
-            this.tabmessages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabmessages.Controls.Add(this.tabPage4);
-            this.tabmessages.Location = new System.Drawing.Point(0, 76);
-            this.tabmessages.Name = "tabmessages";
-            this.tabmessages.SelectedIndex = 0;
-            this.tabmessages.Size = new System.Drawing.Size(621, 106);
-            this.tabmessages.TabIndex = 7;
-            this.tabmessages.TabStop = false;
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.lblReceive);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(613, 80);
-            this.tabPage4.TabIndex = 0;
-            this.tabPage4.Text = "all";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // lblReceive
-            // 
-            this.lblReceive.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblReceive.Location = new System.Drawing.Point(3, 3);
-            this.lblReceive.Multiline = true;
-            this.lblReceive.Name = "lblReceive";
-            this.lblReceive.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.lblReceive.Size = new System.Drawing.Size(607, 74);
-            this.lblReceive.TabIndex = 7;
-            this.lblReceive.TabStop = false;
             // 
             // btnFntdlg
             // 
@@ -259,13 +289,23 @@
             this.btnFntdlg.UseVisualStyleBackColor = true;
             this.btnFntdlg.Click += new System.EventHandler(this.btnFntdlg_Click);
             // 
+            // btnLogClear
+            // 
+            this.btnLogClear.Location = new System.Drawing.Point(6, 6);
+            this.btnLogClear.Name = "btnLogClear";
+            this.btnLogClear.Size = new System.Drawing.Size(96, 35);
+            this.btnLogClear.TabIndex = 0;
+            this.btnLogClear.Text = "Clear syslog";
+            this.btnLogClear.UseVisualStyleBackColor = true;
+            this.btnLogClear.Click += new System.EventHandler(this.btnLogClear_Click);
+            // 
             // FrmMessages
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(637, 387);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnSendMessage);
             this.Name = "FrmMessages";
             this.Text = "＊";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMessages_FormClosing);
@@ -274,12 +314,12 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
             this.tabmessages.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -291,7 +331,7 @@
         private System.Windows.Forms.ToolStripMenuItem 終了ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 確認ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 再接続ToolStripMenuItem;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSendMessage;
         private System.Windows.Forms.ToolStripMenuItem 表示ToolStripMenuItem;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
@@ -306,6 +346,11 @@
         private System.Windows.Forms.TextBox lblReceive;
         private System.Windows.Forms.Button btnFntdlg;
         private System.Windows.Forms.FontDialog fntdlg;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem 切断ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
     }
 }
 

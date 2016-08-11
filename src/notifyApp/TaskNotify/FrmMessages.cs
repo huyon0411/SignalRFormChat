@@ -22,6 +22,13 @@ namespace TaskNotify
 
         public SignalrSelfHost svr = null;
 
+        #region member
+        public List<UserInfo> users = new List<UserInfo>();
+
+        public Dictionary<string, TextBox> MessageBoxs = new Dictionary<string, TextBox>();
+
+        #endregion
+
         #region Constructor
 
         public FrmMessages()
@@ -42,7 +49,6 @@ namespace TaskNotify
                 this.hub.OnReloadNotifies += Hub_OnReloadNotifies;
                 this.hub.OnReloadUserList += Hub_OnReloadUserList;
                 this.hub.OnReadByUser += Hub_OnReadByUser;
-                this.Join();
             }
             catch (Exception ex)
             {
@@ -81,11 +87,11 @@ namespace TaskNotify
                     this.lstmember.ValueMember = "UserCd";
                     this.lstmember.DisplayMember = "Name";
                     this.lstmember.Items.AddRange(this.users.Select(o => new { o.UserCd, o.Name }).ToArray());
-                    this.button1.Enabled = true;
+                    this.btnSendMessage.Enabled = true;
                 }
                 else
                 {
-                    this.button1.Enabled = false;
+                    this.btnSendMessage.Enabled = false;
                 }
             }));
         }
@@ -93,7 +99,6 @@ namespace TaskNotify
         {
             return string.Format("From[{0}]:{1}\r\n", o.FromUser.Name, o.Message);
         }
-        public List<UserInfo> users = new List<UserInfo>();
         private void Hub_OnReloadNotifies(object sender, HubProxyWrapper.HubProxyOnArgs<List<Notify>> e)
         {
             var lst = e.Arg;
@@ -160,9 +165,10 @@ namespace TaskNotify
             Hide();
             ExCommon.Logging += ExCommon_logging;
             this.WriteTrace("Loaded");
+            this.Join();
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        private async void btnSendMessage_Click(object sender, EventArgs e)
         {
             try
             {
@@ -183,8 +189,43 @@ namespace TaskNotify
         private void FrmMessages_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
-            this.Hide();
             this.ShowInTaskbar = false;
+            this.Hide();
+        }
+
+        private void btnLogClear_Click(object sender, EventArgs e)
+        {
+            this.txtSyslog.Text = "";
+        }
+
+        private void btnFntdlg_Click(object sender, EventArgs e)
+        {
+            DialogResult ret = fntdlg.ShowDialog();
+            if (ret == DialogResult.OK)
+            {
+                this.Font = fntdlg.Font;
+            }
+
+        }
+
+        private void tabmessages_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var user = this.tabmessages.SelectedTab.Tag as UserInfo;
+            if (user == null)
+            {
+                this.lstmember.SelectedIndex = -1;
+            }
+            else
+            {
+                for (int i = 0; i < this.lstmember.Items.Count; i++)
+                {
+                    if (((dynamic)this.lstmember.Items[i]).UserCd == user.UserCd)
+                    {
+                        this.lstmember.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
         }
 
         #endregion Form event
@@ -204,12 +245,33 @@ namespace TaskNotify
 
         private void 再接続ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.Reconnect();
+        }
+
+        private void Reconnect()
+        {
+            this.WriteTrace("再接続します...");
+            this.LeaveChat();
+            this.Disconnect();
+            this.Connect();
             this.Join();
+            this.WriteTrace("再接続しました");
+
+        }
+
+        private void LeaveChat()
+        {
+            this.hub.Leave(Properties.Settings.Default.UserCd);
         }
 
         private void 表示ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.ShowMsgForm();
+        }
+
+        private void 切断ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Disconnect();
         }
 
         private void niTask_BalloonTipClicked(object sender, EventArgs e)
@@ -237,8 +299,6 @@ namespace TaskNotify
             return this.hub.Join(Properties.Settings.Default.UserCd, Properties.Settings.Default.UserName);
         }
 
-        public Dictionary<string,TextBox> MessageBoxs = new Dictionary<string, TextBox>();
-
         private void AddTab(UserInfo user)
         {
             var tab = new TabPage();
@@ -250,6 +310,7 @@ namespace TaskNotify
             //tab.TabIndex = maxNo + 1;
             tab.Text = user.Name;
             tab.UseVisualStyleBackColor = true;
+            tab.Tag = user;
             this.tabmessages.TabPages.Add(tab);
         }
 
@@ -269,22 +330,17 @@ namespace TaskNotify
             return txt;
         }
 
+        private void Disconnect()
+        {
+            this.LeaveChat();
+            this.hub.Disconnect();
+        }
 
+        private void Connect()
+        {
+            this.hub.Connect();
+        }
         #endregion Helper
 
-        private void btnLogClear_Click(object sender, EventArgs e)
-        {
-            this.txtSyslog.Text = "";
-        }
-
-        private void btnFntdlg_Click(object sender, EventArgs e)
-        {
-            DialogResult ret = fntdlg.ShowDialog();
-            if (ret == DialogResult.OK)
-            {
-                this.Font = fntdlg.Font;
-            }
-
-        }
     }
 }

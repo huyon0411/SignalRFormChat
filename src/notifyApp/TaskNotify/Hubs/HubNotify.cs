@@ -79,8 +79,15 @@ namespace TaskNotify.Hubs
                     Message = "追加しました"
                 });
             }
-            this.GetNotifies().Wait();
             this.GetUsersList().Wait();
+            this.SendChangeUsers().Wait();
+            this.GetNotifies().Wait();
+        }
+
+        public void Leave(LeaveArg arg)
+        {
+            var user = users.FirstOrDefault(o => o.UserCd == arg.UserCd);
+            users.Remove(user);
             this.SendChangeUsers().Wait();
         }
 
@@ -129,8 +136,9 @@ namespace TaskNotify.Hubs
             await Clients.Client(userId).ReloadUserList(users);
         }
 
-        public async Task ReadNotify(long seq)
+        public async Task ReadNotify(ReadNotifyArg arg)
         {
+            long seq = arg.Seq;
             string userId = this.GetCallerId();
             var msg = notifies.FirstOrDefault(o => o.Seq == seq);
             if (msg == null)
