@@ -73,9 +73,8 @@ namespace TaskNotify.Common
                     server.Dispose();
                 }
                 catch { }
+                this.WriteTrace("Stop Server URL:" + HostUrl);
             }
         }
-
     }
-
 }
