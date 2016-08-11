@@ -39,18 +39,24 @@
             this.button1 = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.txtSendMsg = new System.Windows.Forms.TextBox();
+            this.lstmember = new System.Windows.Forms.ListBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtSyslog = new System.Windows.Forms.TextBox();
-            this.lstmember = new System.Windows.Forms.ListBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.btnLogClear = new System.Windows.Forms.Button();
-            this.lblReceive = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tabmessages = new System.Windows.Forms.TabControl();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.lblReceive = new System.Windows.Forms.TextBox();
+            this.fntdlg = new System.Windows.Forms.FontDialog();
+            this.btnFntdlg = new System.Windows.Forms.Button();
             this.cmsTasks.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabmessages.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTask
@@ -115,7 +121,8 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
@@ -128,8 +135,8 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.lblReceive);
-            this.tabPage1.Controls.Add(this.textBox1);
+            this.tabPage1.Controls.Add(this.tabmessages);
+            this.tabPage1.Controls.Add(this.txtSendMsg);
             this.tabPage1.Controls.Add(this.lstmember);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
@@ -138,6 +145,30 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "main";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // txtSendMsg
+            // 
+            this.txtSendMsg.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSendMsg.Font = new System.Drawing.Font("メイリオ", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.txtSendMsg.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.txtSendMsg.Location = new System.Drawing.Point(3, 188);
+            this.txtSendMsg.Multiline = true;
+            this.txtSendMsg.Name = "txtSendMsg";
+            this.txtSendMsg.Size = new System.Drawing.Size(622, 107);
+            this.txtSendMsg.TabIndex = 5;
+            // 
+            // lstmember
+            // 
+            this.lstmember.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lstmember.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.lstmember.ItemHeight = 23;
+            this.lstmember.Location = new System.Drawing.Point(3, 3);
+            this.lstmember.Name = "lstmember";
+            this.lstmember.ScrollAlwaysVisible = true;
+            this.lstmember.Size = new System.Drawing.Size(622, 73);
+            this.lstmember.TabIndex = 2;
+            this.lstmember.TabStop = false;
             // 
             // tabPage2
             // 
@@ -161,24 +192,14 @@
             this.txtSyslog.Size = new System.Drawing.Size(622, 292);
             this.txtSyslog.TabIndex = 0;
             // 
-            // lstmember
-            // 
-            this.lstmember.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lstmember.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.lstmember.ItemHeight = 23;
-            this.lstmember.Location = new System.Drawing.Point(3, 3);
-            this.lstmember.Name = "lstmember";
-            this.lstmember.ScrollAlwaysVisible = true;
-            this.lstmember.Size = new System.Drawing.Size(622, 73);
-            this.lstmember.TabIndex = 2;
-            // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.btnFntdlg);
             this.tabPage3.Controls.Add(this.btnLogClear);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(628, 107);
+            this.tabPage3.Size = new System.Drawing.Size(628, 298);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -193,25 +214,50 @@
             this.btnLogClear.UseVisualStyleBackColor = true;
             this.btnLogClear.Click += new System.EventHandler(this.btnLogClear_Click);
             // 
+            // tabmessages
+            // 
+            this.tabmessages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabmessages.Controls.Add(this.tabPage4);
+            this.tabmessages.Location = new System.Drawing.Point(0, 76);
+            this.tabmessages.Name = "tabmessages";
+            this.tabmessages.SelectedIndex = 0;
+            this.tabmessages.Size = new System.Drawing.Size(621, 106);
+            this.tabmessages.TabIndex = 7;
+            this.tabmessages.TabStop = false;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.lblReceive);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(613, 80);
+            this.tabPage4.TabIndex = 0;
+            this.tabPage4.Text = "all";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
             // lblReceive
             // 
-            this.lblReceive.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblReceive.Location = new System.Drawing.Point(3, 76);
+            this.lblReceive.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblReceive.Location = new System.Drawing.Point(3, 3);
+            this.lblReceive.Multiline = true;
             this.lblReceive.Name = "lblReceive";
-            this.lblReceive.Size = new System.Drawing.Size(622, 109);
-            this.lblReceive.TabIndex = 6;
-            this.lblReceive.Text = "label1";
+            this.lblReceive.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.lblReceive.Size = new System.Drawing.Size(607, 74);
+            this.lblReceive.TabIndex = 7;
+            this.lblReceive.TabStop = false;
             // 
-            // textBox1
+            // btnFntdlg
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBox1.Font = new System.Drawing.Font("メイリオ", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.textBox1.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.textBox1.Location = new System.Drawing.Point(3, 188);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(622, 107);
-            this.textBox1.TabIndex = 5;
+            this.btnFntdlg.Location = new System.Drawing.Point(8, 47);
+            this.btnFntdlg.Name = "btnFntdlg";
+            this.btnFntdlg.Size = new System.Drawing.Size(96, 35);
+            this.btnFntdlg.TabIndex = 1;
+            this.btnFntdlg.Text = "font setting";
+            this.btnFntdlg.UseVisualStyleBackColor = true;
+            this.btnFntdlg.Click += new System.EventHandler(this.btnFntdlg_Click);
             // 
             // FrmMessages
             // 
@@ -231,6 +277,9 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
+            this.tabmessages.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -251,8 +300,12 @@
         private System.Windows.Forms.TextBox txtSyslog;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button btnLogClear;
-        private System.Windows.Forms.Label lblReceive;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtSendMsg;
+        private System.Windows.Forms.TabControl tabmessages;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TextBox lblReceive;
+        private System.Windows.Forms.Button btnFntdlg;
+        private System.Windows.Forms.FontDialog fntdlg;
     }
 }
 

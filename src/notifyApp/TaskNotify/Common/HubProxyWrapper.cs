@@ -105,6 +105,14 @@ namespace TaskNotify.Common
             return proxy.On<T>(eventName, eventExecute);
         }
 
+        protected IDisposable On(Action eventExecute)
+        {
+            string eventName = eventExecute.Method.Name;
+            this.WriteTrace("On:" + eventName);
+            return proxy.On(eventName, eventExecute);
+        }
+
+
         // It did not work (´・ω・｀)
         //public Task Invoke([CallerMemberName] string method = null, params object[] args)
         //{
@@ -116,6 +124,13 @@ namespace TaskNotify.Common
         // To prepare the argument class you were it.
         // Because it is beautiful better of over there.
 
+        public Task Invoke(bool sendNull = false, [CallerMemberName] string method = null)
+        {
+            this.WriteTrace("Invoke:" + method);
+            return proxy.Invoke(method);
+        }
+
+
         /// <summary>
         /// call server method. that has "struct" args.
         /// </summary>
@@ -124,7 +139,7 @@ namespace TaskNotify.Common
         /// <param name="sendNull"></param>
         /// <param name="method"></param>
         /// <returns></returns>
-        public Task Invoke<T>(Nullable<T> args = null, bool sendNull = false, [CallerMemberName] string method = null) where T : struct
+        public Task Invoke<T>(Nullable<T> args, bool sendNull = false, [CallerMemberName] string method = null) where T : struct
         {
             this.WriteTrace("Invoke:" + method);
             if (args == null && !sendNull)
@@ -142,7 +157,7 @@ namespace TaskNotify.Common
         /// <param name="sendNull"></param>
         /// <param name="method"></param>
         /// <returns></returns>
-        public Task Invoke<T>(T args = null, bool sendNull = false, [CallerMemberName] string method = null) where T : class
+        public Task Invoke<T>(T args, bool sendNull = false, [CallerMemberName] string method = null) where T : class
         {
             this.WriteTrace("Invoke:" + method);
             if (args == null && !sendNull)
@@ -159,7 +174,7 @@ namespace TaskNotify.Common
         /// <param name="sendNull"></param>
         /// <param name="method"></param>
         /// <returns></returns>
-        public Task Invoke(string args = null, bool sendNull = false, [CallerMemberName] string method = null)
+        public Task Invoke(string args, bool sendNull = false, [CallerMemberName] string method = null)
         {
             this.WriteTrace("Invoke:" + method);
             if (args == null && !sendNull)

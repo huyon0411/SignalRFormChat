@@ -24,19 +24,11 @@ namespace Entities
         [DataMember(Name = "Seq")]
         public long Seq { get; set; }
 
-        [DataMember(Name = "ToId")]
-        public string ToId { get; set; }
+        [DataMember(Name = "ToUser")]
+        public UserInfo ToUser { get; set; }
 
-        [DataMember(Name = "FromId")]
-        public string FromId { get; set; }
-
-        [DataMember(Name = "FromCd")]
-        public string FromCd { get; set; }
-
-        [DataMember(Name = "ToCd")]
-        public string ToCd { get; set; }
-
-
+        [DataMember(Name = "FromUser")]
+        public UserInfo FromUser { get; set; }
 
         [DataMember(Name = "Message")]
         public string Message { get; set; }

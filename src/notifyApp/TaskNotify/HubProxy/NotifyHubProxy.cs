@@ -17,6 +17,7 @@ namespace TaskNotify.HubProxy
 
         public event EventHandler<HubProxyOnArgs<List<Notify>>> OnReloadNotifies;
         public event EventHandler<HubProxyOnArgs<List<UserInfo>>> OnReloadUserList;
+        public event EventHandler<HubProxyOnArgs<long>> OnReadByUser;
 
         #endregion event
 
@@ -41,9 +42,16 @@ namespace TaskNotify.HubProxy
         {
             this.On<List<Notify>>(this.ReloadNotifies);
             this.On<List<UserInfo>>(this.ReloadUserList);
+            this.On(this.GetChangeUser);
+            
         }
 
         #region method Call from Server
+
+        private void GetChangeUser()
+        {
+            this.GetUsersList();
+        }
 
         private void ReloadUserList(List<UserInfo> users)
         {
@@ -54,10 +62,18 @@ namespace TaskNotify.HubProxy
         {
             OnReloadNotifies.Invoke(this, new HubProxyOnArgs<List<Notify>>() { Arg = notifies });
         }
-
+        public void ReadByUser(long seq)
+        {
+            OnReadByUser.Invoke(this, new HubProxyOnArgs<long>() { Arg = seq });
+        }
         #endregion method Call from Server
 
         #region server method call
+
+        public Task ReadNotify(long seq)
+        {
+            return this.Invoke((long?)seq);
+        }
 
         public Task GetNotifies()
         {

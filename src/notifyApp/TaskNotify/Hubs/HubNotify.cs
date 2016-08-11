@@ -13,6 +13,17 @@ namespace TaskNotify.Hubs
     [HubName("NotifyHub")]
     public class HubNotify : Hub
     {
+        public static long seq = 0;
+        public static object seqlock = new object();
+        public long GetNextSeq()
+        {
+            lock (seqlock)
+            {
+                seq += 1;
+                return seq;
+            }
+        }
+
         /// <summary>
         /// connect users List
         /// </summary>
@@ -39,23 +50,38 @@ namespace TaskNotify.Hubs
         {
             string cd = arg.Cd;
             string name = arg.Name;
+            string id = this.GetCallerId();
             var user = new UserInfo()
             {
                 SignalRId = this.GetCallerId(),
                 UserCd = cd,
                 Name = name
             };
-            users.Add(user);
-            notifies.Add(new Notify() {
-                FromId = user.UserCd,
-                ToId = user.SignalRId,
-                FromCd = user.UserCd,
-                ToCd = user.SignalRId,
-                IsRead = false,
-                Message = "追加しました"
-            });
+            if (!users.Any(o=>o.SignalRId == id))
+            {
+                users.Add(user);
+                notifies.Add(new Notify()
+                {
+                    Seq = GetNextSeq(),
+                    FromUser = user,
+                    ToUser = user,
+                    IsRead = false,
+                    Message = "追加しました"
+                });
+            }else
+            {
+                notifies.Add(new Notify()
+                {
+                    Seq = GetNextSeq(),
+                    FromUser = user,
+                    ToUser = user,
+                    IsRead = false,
+                    Message = "追加しました"
+                });
+            }
             this.GetNotifies().Wait();
             this.GetUsersList().Wait();
+            this.SendChangeUsers().Wait();
         }
 
         public void SendMessage(SendMessageArg arg)
@@ -67,10 +93,9 @@ namespace TaskNotify.Hubs
 
             notifies.Add(new Notify()
             {
-                FromId = caller.SignalRId,
-                ToId = touser.SignalRId,
-                FromCd = caller.UserCd,
-                ToCd = touser.UserCd,
+                Seq = GetNextSeq(),
+                FromUser = caller,
+                ToUser  = touser,
                 IsRead = false,
                 Message = arg.Message
             });
@@ -94,7 +119,7 @@ namespace TaskNotify.Hubs
 
         public async Task SendNotifiesToUser(string userId)
         {
-            var ret = notifies.Where(o => o.ToId == userId && !o.IsRead).ToList();
+            var ret = notifies.Where(o => o.ToUser.SignalRId == userId && !o.IsRead).ToList();
             await Clients.Client(userId).ReloadNotifies(ret);
         }
 
@@ -104,6 +129,22 @@ namespace TaskNotify.Hubs
             await Clients.Client(userId).ReloadUserList(users);
         }
 
+        public async Task ReadNotify(long seq)
+        {
+            string userId = this.GetCallerId();
+            var msg = notifies.FirstOrDefault(o => o.Seq == seq);
+            if (msg == null)
+            {
+                return;
+            }
+            msg.IsRead = true;
+            await SendRead(msg);
+        }
+
+        public async Task SendRead(Notify msg)
+        {
+            await Clients.Client(msg.FromUser.SignalRId).ReadByUser(msg.Seq);
+        }
 
         public async Task GetNotifies()
         {
@@ -114,9 +155,13 @@ namespace TaskNotify.Hubs
 
         public List<Notify> PushNotify(string toId, string msg)
         {
-            return notifies.Where(o => o.ToId == this.GetCallerId()).ToList();
+            return notifies.Where(o => o.ToUser.SignalRId == this.GetCallerId()).ToList();
         }
 
+        public async Task SendChangeUsers()
+        {
+            await Clients.All.GetChangeUser();
+        }
 
 
     }

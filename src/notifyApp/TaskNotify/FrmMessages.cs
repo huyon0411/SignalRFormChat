@@ -41,7 +41,7 @@ namespace TaskNotify
                 this.hub = new NotifyHubProxy(Properties.Settings.Default.ServerUrl, NotifyHubProxy.HubName);
                 this.hub.OnReloadNotifies += Hub_OnReloadNotifies;
                 this.hub.OnReloadUserList += Hub_OnReloadUserList;
-
+                this.hub.OnReadByUser += Hub_OnReadByUser;
                 this.Join();
             }
             catch (Exception ex)
@@ -63,19 +63,24 @@ namespace TaskNotify
 
         #region Hub event
 
+        private void Hub_OnReadByUser(object sender, HubProxyWrapper.HubProxyOnArgs<long> e)
+        {
+            //throw new NotImplementedException();
+        }
+
         private void Hub_OnReloadUserList(object sender, HubProxyWrapper.HubProxyOnArgs<List<UserInfo>> e)
         {
-            var lst = e.Arg;
+            this.users = e.Arg;
             Invoke((MethodInvoker)(() =>
             {
                 this.niTask.BalloonTipIcon = ToolTipIcon.Info;
                 this.niTask.BalloonTipTitle = "ChangeUsers";
                 this.lstmember.Items.Clear();
-                if (lst.Count > 0)
+                if (this.users.Count > 0)
                 {
                     this.lstmember.ValueMember = "UserCd";
                     this.lstmember.DisplayMember = "Name";
-                    this.lstmember.Items.AddRange(lst.Select(o => new { o.UserCd, o.Name }).ToArray());
+                    this.lstmember.Items.AddRange(this.users.Select(o => new { o.UserCd, o.Name }).ToArray());
                     this.button1.Enabled = true;
                 }
                 else
@@ -84,7 +89,11 @@ namespace TaskNotify
                 }
             }));
         }
-
+        private string FormatNofity(Notify o)
+        {
+            return string.Format("From[{0}]:{1}\r\n", o.FromUser.Name, o.Message);
+        }
+        public List<UserInfo> users = new List<UserInfo>();
         private void Hub_OnReloadNotifies(object sender, HubProxyWrapper.HubProxyOnArgs<List<Notify>> e)
         {
             var lst = e.Arg;
@@ -92,23 +101,56 @@ namespace TaskNotify
             this.niTask.BalloonTipTitle = "Notify";
             if (lst.Count > 0)
             {
-                string rev = string.Join("\n", lst.Select(o => string.Format("{0} :{1}", o.FromCd, o.Message)).ToArray());
+                string rev = string.Join("", lst.Select(o => FormatNofity(o)).ToArray());
                 Invoke((MethodInvoker)(() =>
                 {
-                    this.lblReceive.Text = rev;
-                    this.niTask.BalloonTipText = lst[0].Message;
-                    this.niTask.ShowBalloonTip(1000);
+                    this.lblReceive.Text += rev;
+                    this.AddTabsByMessage(lst);
+                    lst.ForEach(o => this.hub.ReadNotify(o.Seq));
+                    if (!this.Visible)
+                    {
+                        this.niTask.BalloonTipText = lst[0].Message;
+                        this.niTask.ShowBalloonTip(1000);
+                    }
                 }));
             }
             else
             {
-                this.lblReceive.Text = "";
-                this.niTask.BalloonTipText = "新着情報はありません。";
-                this.niTask.ShowBalloonTip(1000);
+                //this.lblReceive.Text = "";
+                if (!this.Visible)
+                {
+                    this.niTask.BalloonTipText = "新着情報はありません。";
+                    this.niTask.ShowBalloonTip(1000);
+                }
             }
 
         }
 
+        private void AddTabsByMessage(List<Notify> lst)
+        {
+            foreach(var n in lst)
+            {
+                AddTabByMessage(n);
+            }
+        }
+
+        private void AddTabByMessage(Notify notify)
+        {
+            var user = this.users.FirstOrDefault(o => o.UserCd == notify.FromUser.UserCd);
+            if (user == null)
+            {
+                return;
+            }
+
+            if (!this.MessageBoxs.ContainsKey(notify.FromUser.UserCd))
+            {
+                this.AddTab(user);
+            }
+            var msgbox = this.MessageBoxs[user.UserCd];
+            msgbox.Text += FormatNofity(notify);
+            this.tabmessages.SelectedTab = ((TabPage)(msgbox.Parent));
+
+        }
         #endregion Hub event
 
         #region Form event
@@ -127,8 +169,10 @@ namespace TaskNotify
                 if (this.lstmember.SelectedItem == null) { return; }
                 string userCd = ((dynamic)this.lstmember.SelectedItem).UserCd;
                 if (userCd == null) { return; }
-                await this.hub.SendMessage(userCd, this.textBox1.Text);
-                this.textBox1.Text = "";
+                await this.hub.SendMessage(userCd, this.txtSendMsg.Text);
+                this.lblReceive.Text += string.Format("\r\nTo[{0}]{1}\r\n", userCd, this.txtSendMsg.Text);
+                this.txtSendMsg.Text = "";
+                this.txtSendMsg.Focus();
             }
             catch (Exception ex)
             {
@@ -193,11 +237,54 @@ namespace TaskNotify
             return this.hub.Join(Properties.Settings.Default.UserCd, Properties.Settings.Default.UserName);
         }
 
+        public Dictionary<string,TextBox> MessageBoxs = new Dictionary<string, TextBox>();
+
+        private void AddTab(UserInfo user)
+        {
+            var tab = new TabPage();
+            tab.Controls.Add(this.GetMsgTextBox(user.UserCd));
+            tab.Location = new System.Drawing.Point(4, 22);
+            tab.Name = "tabPage_"+user.UserCd;
+            tab.Padding = new System.Windows.Forms.Padding(3);
+            tab.Size = new System.Drawing.Size(628, 298);
+            //tab.TabIndex = maxNo + 1;
+            tab.Text = user.Name;
+            tab.UseVisualStyleBackColor = true;
+            this.tabmessages.TabPages.Add(tab);
+        }
+
+        private TextBox GetMsgTextBox(string cd)
+        {
+            var txt = new TextBox();
+            txt.Dock = System.Windows.Forms.DockStyle.Fill;
+            txt.Location = new System.Drawing.Point(3, 3);
+            txt.Multiline = true;
+            txt.Name = "txtlog_"+ cd;
+            txt.ReadOnly = true;
+            txt.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            txt.Size = new System.Drawing.Size(622, 292);
+            txt.TabIndex = 0;
+            txt.TabStop = false;
+            MessageBoxs[cd] = txt;
+            return txt;
+        }
+
+
         #endregion Helper
 
         private void btnLogClear_Click(object sender, EventArgs e)
         {
             this.txtSyslog.Text = "";
+        }
+
+        private void btnFntdlg_Click(object sender, EventArgs e)
+        {
+            DialogResult ret = fntdlg.ShowDialog();
+            if (ret == DialogResult.OK)
+            {
+                this.Font = fntdlg.Font;
+            }
+
         }
     }
 }
