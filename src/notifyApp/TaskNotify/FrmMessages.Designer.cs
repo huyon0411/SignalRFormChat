@@ -43,25 +43,33 @@
             this.確認ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSendMessage = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tpMain = new System.Windows.Forms.TabPage();
             this.tabmessages = new System.Windows.Forms.TabControl();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.lblReceive = new System.Windows.Forms.TextBox();
-            this.txtSendMsg = new System.Windows.Forms.TextBox();
+            this.tpSendLst = new System.Windows.Forms.TabPage();
             this.lstmember = new System.Windows.Forms.ListBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.txtSendMsg = new System.Windows.Forms.TextBox();
+            this.tpSyslog = new System.Windows.Forms.TabPage();
             this.txtSyslog = new System.Windows.Forms.TextBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tpConfig = new System.Windows.Forms.TabPage();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.seqDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toUserDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fromUserDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.messageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.isReadDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.bsMessage = new System.Windows.Forms.BindingSource(this.components);
             this.btnFntdlg = new System.Windows.Forms.Button();
             this.btnLogClear = new System.Windows.Forms.Button();
             this.fntdlg = new System.Windows.Forms.FontDialog();
             this.cmsTasks.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tpMain.SuspendLayout();
             this.tabmessages.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.tabPage3.SuspendLayout();
+            this.tpSendLst.SuspendLayout();
+            this.tpSyslog.SuspendLayout();
+            this.tpConfig.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsMessage)).BeginInit();
             this.SuspendLayout();
             // 
             // niTask
@@ -111,14 +119,14 @@
             // 再接続ToolStripMenuItem
             // 
             this.再接続ToolStripMenuItem.Name = "再接続ToolStripMenuItem";
-            this.再接続ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.再接続ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.再接続ToolStripMenuItem.Text = "再接続";
             this.再接続ToolStripMenuItem.Click += new System.EventHandler(this.再接続ToolStripMenuItem_Click);
             // 
             // 切断ToolStripMenuItem
             // 
             this.切断ToolStripMenuItem.Name = "切断ToolStripMenuItem";
-            this.切断ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.切断ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.切断ToolStripMenuItem.Text = "切断";
             this.切断ToolStripMenuItem.Click += new System.EventHandler(this.切断ToolStripMenuItem_Click);
             // 
@@ -150,10 +158,10 @@
             // 
             this.btnSendMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSendMessage.Location = new System.Drawing.Point(0, 331);
+            this.btnSendMessage.Location = new System.Drawing.Point(0, 617);
             this.btnSendMessage.Name = "btnSendMessage";
-            this.btnSendMessage.Size = new System.Drawing.Size(636, 54);
-            this.btnSendMessage.TabIndex = 3;
+            this.btnSendMessage.Size = new System.Drawing.Size(778, 54);
+            this.btnSendMessage.TabIndex = 200;
             this.btnSendMessage.Text = "送信";
             this.btnSendMessage.UseVisualStyleBackColor = true;
             this.btnSendMessage.Click += new System.EventHandler(this.btnSendMessage_Click);
@@ -163,63 +171,63 @@
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tpMain);
+            this.tabControl1.Controls.Add(this.tpSyslog);
+            this.tabControl1.Controls.Add(this.tpConfig);
             this.tabControl1.Location = new System.Drawing.Point(0, 1);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(636, 324);
+            this.tabControl1.Size = new System.Drawing.Size(778, 610);
             this.tabControl1.TabIndex = 5;
             // 
-            // tabPage1
+            // tpMain
             // 
-            this.tabPage1.Controls.Add(this.tabmessages);
-            this.tabPage1.Controls.Add(this.txtSendMsg);
-            this.tabPage1.Controls.Add(this.lstmember);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(628, 298);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "main";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tpMain.Controls.Add(this.tabmessages);
+            this.tpMain.Controls.Add(this.txtSendMsg);
+            this.tpMain.Location = new System.Drawing.Point(4, 22);
+            this.tpMain.Name = "tpMain";
+            this.tpMain.Padding = new System.Windows.Forms.Padding(3);
+            this.tpMain.Size = new System.Drawing.Size(770, 584);
+            this.tpMain.TabIndex = 0;
+            this.tpMain.Text = "main";
+            this.tpMain.UseVisualStyleBackColor = true;
             // 
             // tabmessages
             // 
             this.tabmessages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabmessages.Controls.Add(this.tabPage4);
-            this.tabmessages.Location = new System.Drawing.Point(0, 76);
+            this.tabmessages.Controls.Add(this.tpSendLst);
+            this.tabmessages.Location = new System.Drawing.Point(3, 3);
             this.tabmessages.Name = "tabmessages";
             this.tabmessages.SelectedIndex = 0;
-            this.tabmessages.Size = new System.Drawing.Size(621, 106);
+            this.tabmessages.Size = new System.Drawing.Size(764, 468);
             this.tabmessages.TabIndex = 7;
             this.tabmessages.TabStop = false;
             this.tabmessages.SelectedIndexChanged += new System.EventHandler(this.tabmessages_SelectedIndexChanged);
             // 
-            // tabPage4
+            // tpSendLst
             // 
-            this.tabPage4.Controls.Add(this.lblReceive);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(613, 80);
-            this.tabPage4.TabIndex = 0;
-            this.tabPage4.Text = "all";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.tpSendLst.Controls.Add(this.lstmember);
+            this.tpSendLst.Location = new System.Drawing.Point(4, 22);
+            this.tpSendLst.Name = "tpSendLst";
+            this.tpSendLst.Padding = new System.Windows.Forms.Padding(3);
+            this.tpSendLst.Size = new System.Drawing.Size(756, 442);
+            this.tpSendLst.TabIndex = 0;
+            this.tpSendLst.Text = "send";
+            this.tpSendLst.UseVisualStyleBackColor = true;
             // 
-            // lblReceive
+            // lstmember
             // 
-            this.lblReceive.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblReceive.Location = new System.Drawing.Point(3, 3);
-            this.lblReceive.Multiline = true;
-            this.lblReceive.Name = "lblReceive";
-            this.lblReceive.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.lblReceive.Size = new System.Drawing.Size(607, 74);
-            this.lblReceive.TabIndex = 7;
-            this.lblReceive.TabStop = false;
+            this.lstmember.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstmember.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.lstmember.ItemHeight = 23;
+            this.lstmember.Location = new System.Drawing.Point(3, 3);
+            this.lstmember.Name = "lstmember";
+            this.lstmember.ScrollAlwaysVisible = true;
+            this.lstmember.Size = new System.Drawing.Size(750, 436);
+            this.lstmember.TabIndex = 2;
+            this.lstmember.TabStop = false;
             // 
             // txtSendMsg
             // 
@@ -227,34 +235,22 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSendMsg.Font = new System.Drawing.Font("メイリオ", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.txtSendMsg.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.txtSendMsg.Location = new System.Drawing.Point(3, 188);
+            this.txtSendMsg.Location = new System.Drawing.Point(3, 474);
             this.txtSendMsg.Multiline = true;
             this.txtSendMsg.Name = "txtSendMsg";
-            this.txtSendMsg.Size = new System.Drawing.Size(622, 107);
-            this.txtSendMsg.TabIndex = 5;
+            this.txtSendMsg.Size = new System.Drawing.Size(764, 107);
+            this.txtSendMsg.TabIndex = 100;
             // 
-            // lstmember
+            // tpSyslog
             // 
-            this.lstmember.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lstmember.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.lstmember.ItemHeight = 23;
-            this.lstmember.Location = new System.Drawing.Point(3, 3);
-            this.lstmember.Name = "lstmember";
-            this.lstmember.ScrollAlwaysVisible = true;
-            this.lstmember.Size = new System.Drawing.Size(622, 73);
-            this.lstmember.TabIndex = 2;
-            this.lstmember.TabStop = false;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.txtSyslog);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(628, 298);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "syslog";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tpSyslog.Controls.Add(this.txtSyslog);
+            this.tpSyslog.Location = new System.Drawing.Point(4, 22);
+            this.tpSyslog.Name = "tpSyslog";
+            this.tpSyslog.Padding = new System.Windows.Forms.Padding(3);
+            this.tpSyslog.Size = new System.Drawing.Size(770, 584);
+            this.tpSyslog.TabIndex = 1;
+            this.tpSyslog.Text = "syslog";
+            this.tpSyslog.UseVisualStyleBackColor = true;
             // 
             // txtSyslog
             // 
@@ -264,20 +260,86 @@
             this.txtSyslog.Name = "txtSyslog";
             this.txtSyslog.ReadOnly = true;
             this.txtSyslog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtSyslog.Size = new System.Drawing.Size(622, 292);
+            this.txtSyslog.Size = new System.Drawing.Size(764, 578);
             this.txtSyslog.TabIndex = 0;
             // 
-            // tabPage3
+            // tpConfig
             // 
-            this.tabPage3.Controls.Add(this.btnFntdlg);
-            this.tabPage3.Controls.Add(this.btnLogClear);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(628, 298);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "config";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.tpConfig.Controls.Add(this.dataGridView1);
+            this.tpConfig.Controls.Add(this.btnFntdlg);
+            this.tpConfig.Controls.Add(this.btnLogClear);
+            this.tpConfig.Location = new System.Drawing.Point(4, 22);
+            this.tpConfig.Name = "tpConfig";
+            this.tpConfig.Padding = new System.Windows.Forms.Padding(3);
+            this.tpConfig.Size = new System.Drawing.Size(770, 584);
+            this.tpConfig.TabIndex = 2;
+            this.tpConfig.Text = "config";
+            this.tpConfig.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AutoGenerateColumns = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.seqDataGridViewTextBoxColumn,
+            this.toUserDataGridViewTextBoxColumn,
+            this.fromUserDataGridViewTextBoxColumn,
+            this.messageDataGridViewTextBoxColumn,
+            this.isReadDataGridViewCheckBoxColumn});
+            this.dataGridView1.DataSource = this.bsMessage;
+            this.dataGridView1.Location = new System.Drawing.Point(8, 136);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowTemplate.Height = 21;
+            this.dataGridView1.Size = new System.Drawing.Size(383, 147);
+            this.dataGridView1.TabIndex = 9;
+            this.dataGridView1.Visible = false;
+            // 
+            // seqDataGridViewTextBoxColumn
+            // 
+            this.seqDataGridViewTextBoxColumn.DataPropertyName = "Seq";
+            this.seqDataGridViewTextBoxColumn.HeaderText = "Seq";
+            this.seqDataGridViewTextBoxColumn.Name = "seqDataGridViewTextBoxColumn";
+            this.seqDataGridViewTextBoxColumn.ReadOnly = true;
+            this.seqDataGridViewTextBoxColumn.Width = 40;
+            // 
+            // toUserDataGridViewTextBoxColumn
+            // 
+            this.toUserDataGridViewTextBoxColumn.DataPropertyName = "ToUser";
+            this.toUserDataGridViewTextBoxColumn.HeaderText = "ToUser";
+            this.toUserDataGridViewTextBoxColumn.Name = "toUserDataGridViewTextBoxColumn";
+            this.toUserDataGridViewTextBoxColumn.ReadOnly = true;
+            this.toUserDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // fromUserDataGridViewTextBoxColumn
+            // 
+            this.fromUserDataGridViewTextBoxColumn.DataPropertyName = "FromUser";
+            this.fromUserDataGridViewTextBoxColumn.HeaderText = "FromUser";
+            this.fromUserDataGridViewTextBoxColumn.Name = "fromUserDataGridViewTextBoxColumn";
+            this.fromUserDataGridViewTextBoxColumn.ReadOnly = true;
+            this.fromUserDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // messageDataGridViewTextBoxColumn
+            // 
+            this.messageDataGridViewTextBoxColumn.DataPropertyName = "Message";
+            this.messageDataGridViewTextBoxColumn.HeaderText = "Message";
+            this.messageDataGridViewTextBoxColumn.Name = "messageDataGridViewTextBoxColumn";
+            this.messageDataGridViewTextBoxColumn.ReadOnly = true;
+            this.messageDataGridViewTextBoxColumn.Width = 300;
+            // 
+            // isReadDataGridViewCheckBoxColumn
+            // 
+            this.isReadDataGridViewCheckBoxColumn.DataPropertyName = "IsRead";
+            this.isReadDataGridViewCheckBoxColumn.HeaderText = "IsRead";
+            this.isReadDataGridViewCheckBoxColumn.Name = "isReadDataGridViewCheckBoxColumn";
+            this.isReadDataGridViewCheckBoxColumn.ReadOnly = true;
+            this.isReadDataGridViewCheckBoxColumn.Visible = false;
+            // 
+            // bsMessage
+            // 
+            this.bsMessage.DataSource = typeof(Entities.Notify);
             // 
             // btnFntdlg
             // 
@@ -303,7 +365,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(637, 387);
+            this.ClientSize = new System.Drawing.Size(779, 673);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnSendMessage);
             this.Name = "FrmMessages";
@@ -312,14 +374,15 @@
             this.Load += new System.EventHandler(this.FrmMessages_Load);
             this.cmsTasks.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.tpMain.ResumeLayout(false);
+            this.tpMain.PerformLayout();
             this.tabmessages.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
+            this.tpSendLst.ResumeLayout(false);
+            this.tpSyslog.ResumeLayout(false);
+            this.tpSyslog.PerformLayout();
+            this.tpConfig.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsMessage)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -334,16 +397,15 @@
         private System.Windows.Forms.Button btnSendMessage;
         private System.Windows.Forms.ToolStripMenuItem 表示ToolStripMenuItem;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tpMain;
         private System.Windows.Forms.ListBox lstmember;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tpSyslog;
         private System.Windows.Forms.TextBox txtSyslog;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tpConfig;
         private System.Windows.Forms.Button btnLogClear;
         private System.Windows.Forms.TextBox txtSendMsg;
         private System.Windows.Forms.TabControl tabmessages;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.TextBox lblReceive;
+        private System.Windows.Forms.TabPage tpSendLst;
         private System.Windows.Forms.Button btnFntdlg;
         private System.Windows.Forms.FontDialog fntdlg;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
@@ -351,6 +413,13 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem 切断ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.BindingSource bsMessage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn seqDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn toUserDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fromUserDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn messageDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn isReadDataGridViewCheckBoxColumn;
     }
 }
 
