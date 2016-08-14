@@ -85,23 +85,27 @@ namespace TaskNotify
         private void Hub_OnSendSuccess(object sender, HubProxyWrapper.HubProxyOnArgs<Notify> e)
         {
             var toCd = e.Arg.ToUser.UserCd;
-            if (!MsgDic.ContainsKey(toCd))
+            if (!this.MsgDic.ContainsKey(toCd))
             {
-                MsgDic[toCd] = new TabMembers();
+                this.MsgDic[toCd] = new TabMembers();
                 this.AddTab(e.Arg.ToUser);
             }
             var msg = MsgDic[toCd];
             msg.MessageSend.Add(e.Arg);
-            DoUI(() => msg.BsSend.ResetBindings(false));
+            DoUI(() =>
+            {
+                msg.BsSend.ResetBindings(false);
+                this.SelectTab(toCd);
+            });
         }
 
         private void Hub_OnReadByUser(object sender, HubProxyWrapper.HubProxyOnArgs<long> e)
         {
-            Notify msgRead = null;
+            
             var msgObj = MsgDic.Values.FirstOrDefault(msgDat => msgDat.MessageSend.Any(o => o.Seq == e.Arg));
             if (msgObj != null)
             {
-                msgRead = msgObj.MessageSend.FirstOrDefault(o => o.Seq == e.Arg);
+                Notify msgRead = msgObj.MessageSend.FirstOrDefault(o => o.Seq == e.Arg);
                 msgRead.IsRead = true;
                 DoUI(() => msgObj.BsSend.ResetBindings(false));
             }
@@ -152,6 +156,10 @@ namespace TaskNotify
                     if (!this.Visible)
                     {
                         this.niTask.BalloonTipText = lst[0].Message;
+                        if (string.IsNullOrEmpty(this.niTask.BalloonTipText))
+                        {
+                            this.niTask.BalloonTipText = " ";
+                        }
                         this.niTask.ShowBalloonTip(1000);
                     }
                 }));
@@ -239,6 +247,7 @@ namespace TaskNotify
                     userCd = ((dynamic)this.lstmember.SelectedItem).UserCd;
                 }
                 if (userCd == null) { return; }
+                //this.OnFormClosing(new FormClosingEventArgs(CloseReason.UserClosing,false));
                 await this.hub.SendMessage(userCd, this.txtSendMsg.Text);
                 this.txtSendMsg.Text = "";
                 this.txtSendMsg.Focus();
@@ -377,7 +386,7 @@ namespace TaskNotify
             tab.Text = user.Name;
             tab.UseVisualStyleBackColor = true;
             tab.Tag = user;
-            this.tabmessages.TabPages.Add(tab);
+            DoUI(()=> this.tabmessages.TabPages.Add(tab));
         }
 
         private DataGridView GetGrid(string cd)
