@@ -119,14 +119,21 @@ namespace TaskNotify.Common
         {
             string eventName = eventExecute.Method.Name;
             this.WriteTrace("On:" + eventName);
-            return proxy.On<T>(eventName, eventExecute);
+            return proxy.On<T>(eventName, (arg) =>
+            {
+                this.WriteTrace("Call:" + eventName);
+                eventExecute(arg);
+            });
         }
 
         protected IDisposable On(Action eventExecute)
         {
             string eventName = eventExecute.Method.Name;
             this.WriteTrace("On:" + eventName);
-            return proxy.On(eventName, eventExecute);
+            return proxy.On(eventName, ()=> {
+                this.WriteTrace("Call:" + eventName);
+                eventExecute();
+            });
         }
 
 
