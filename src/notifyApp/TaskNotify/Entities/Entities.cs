@@ -10,6 +10,10 @@ namespace Entities
     [DataContract]
     public class UserInfo
     {
+        public override string ToString()
+        {
+            return this.Name;
+        }
         [DataMember(Name = "SignalRId")]
         public string SignalRId;
         [DataMember(Name = "UserCd")]
