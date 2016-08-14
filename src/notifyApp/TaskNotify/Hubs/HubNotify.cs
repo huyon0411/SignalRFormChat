@@ -97,15 +97,16 @@ namespace TaskNotify.Hubs
             if (caller == null) { return; }
             var touser = this.GetUserByCd(arg.ToCd);
             if (touser == null) { return; }
-
-            notifies.Add(new Notify()
+            var notify = new Notify()
             {
                 Seq = GetNextSeq(),
                 FromUser = caller,
-                ToUser  = touser,
+                ToUser = touser,
                 IsRead = false,
                 Message = arg.Message
-            });
+            };
+            notifies.Add(notify);
+            this.SendSuccess(caller.SignalRId, notify).Wait();
             this.SendNotifiesToUser(touser.SignalRId).Wait();
         }
 
@@ -169,6 +170,11 @@ namespace TaskNotify.Hubs
         public async Task SendChangeUsers()
         {
             await Clients.All.GetChangeUser();
+        }
+
+        public async Task SendSuccess(string id, Notify notify)
+        {
+            await Clients.Client(id).SendSuccess(notify);
         }
 
 
