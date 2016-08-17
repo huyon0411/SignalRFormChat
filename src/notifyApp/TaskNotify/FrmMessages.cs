@@ -21,6 +21,8 @@ namespace TaskNotify
 
         public class TabMembers
         {
+            public Action<Notify> OnRead = null;
+
             public List<Notify> Messages  = new List<Notify>();
             public BindingSource BsMsg = new BindingSource();
             public List<Notify> MessageSend = new List<Notify>();
@@ -29,6 +31,15 @@ namespace TaskNotify
             {
                 this.BsMsg.DataSource = this.Messages;
                 this.BsSend.DataSource = this.MessageSend;
+                this.BsMsg.PositionChanged += BsMsg_PositionChanged;
+            }
+
+            private void BsMsg_PositionChanged(object sender, EventArgs e)
+            {
+                var o = sender as BindingSource;
+                Notify n = o.Current as Notify;
+                if (n == null || n.IsRead) { return; }
+                OnRead.Invoke(n);
             }
         }
 
@@ -142,6 +153,7 @@ namespace TaskNotify
         {
             return string.Format("From[{0}]:{1}\r\n", o.FromUser.Name, o.Message);
         }
+
         private void Hub_OnReloadNotifies(object sender, HubProxyWrapper.HubProxyOnArgs<List<Notify>> e)
         {
             var lst = e.Arg;
@@ -149,8 +161,8 @@ namespace TaskNotify
             this.niTask.BalloonTipTitle = "Notify";
             if (lst.Count > 0)
             {
-                lst.ForEach(async o => await this.hub.ReadNotify(o.Seq));
-                Invoke((MethodInvoker)(() =>
+                //lst.ForEach(async o => await this.hub.ReadNotify(o.Seq));
+                DoUI(() =>
                 {
                     this.AddTabsByMessage(lst);
                     if (!this.Visible)
@@ -162,7 +174,7 @@ namespace TaskNotify
                         }
                         this.niTask.ShowBalloonTip(1000);
                     }
-                }));
+                });
             }
             else
             {
@@ -194,6 +206,7 @@ namespace TaskNotify
             if (!this.MsgDic.ContainsKey(user.UserCd))
             {
                 MsgDic[user.UserCd] = new TabMembers();
+                MsgDic[user.UserCd].OnRead = OnRead;
                 this.AddTab(user);
             }
             var msg = MsgDic[user.UserCd];
@@ -201,6 +214,11 @@ namespace TaskNotify
             msg.BsMsg.ResetBindings(false);
 
             this.SelectTab(user.UserCd);
+        }
+
+        private async void OnRead(Notify n)
+        {
+            await this.hub.ReadNotify(n.Seq);
         }
 
         private void SelectTab(string cd)
