@@ -70,6 +70,8 @@ namespace Entities
             [DataMember(Name = "UserCd")]
             public string UserCd { get; set; }
         }
+
+        [DataContract]
         public class ReadNotifyArg
         {
             [DataMember(Name = "Seq")]

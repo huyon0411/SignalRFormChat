@@ -52,15 +52,15 @@
             this.txtSyslog = new System.Windows.Forms.TextBox();
             this.tpConfig = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btnFntdlg = new System.Windows.Forms.Button();
+            this.btnLogClear = new System.Windows.Forms.Button();
+            this.fntdlg = new System.Windows.Forms.FontDialog();
             this.seqDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toUserDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fromUserDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.messageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.isReadDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.bsMessage = new System.Windows.Forms.BindingSource(this.components);
-            this.btnFntdlg = new System.Windows.Forms.Button();
-            this.btnLogClear = new System.Windows.Forms.Button();
-            this.fntdlg = new System.Windows.Forms.FontDialog();
             this.cmsTasks.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpMain.SuspendLayout();
@@ -297,6 +297,26 @@
             this.dataGridView1.TabIndex = 9;
             this.dataGridView1.Visible = false;
             // 
+            // btnFntdlg
+            // 
+            this.btnFntdlg.Location = new System.Drawing.Point(8, 47);
+            this.btnFntdlg.Name = "btnFntdlg";
+            this.btnFntdlg.Size = new System.Drawing.Size(96, 35);
+            this.btnFntdlg.TabIndex = 1;
+            this.btnFntdlg.Text = "font setting";
+            this.btnFntdlg.UseVisualStyleBackColor = true;
+            this.btnFntdlg.Click += new System.EventHandler(this.btnFntdlg_Click);
+            // 
+            // btnLogClear
+            // 
+            this.btnLogClear.Location = new System.Drawing.Point(6, 6);
+            this.btnLogClear.Name = "btnLogClear";
+            this.btnLogClear.Size = new System.Drawing.Size(96, 35);
+            this.btnLogClear.TabIndex = 0;
+            this.btnLogClear.Text = "Clear syslog";
+            this.btnLogClear.UseVisualStyleBackColor = true;
+            this.btnLogClear.Click += new System.EventHandler(this.btnLogClear_Click);
+            // 
             // seqDataGridViewTextBoxColumn
             // 
             this.seqDataGridViewTextBoxColumn.DataPropertyName = "Seq";
@@ -341,26 +361,6 @@
             // 
             this.bsMessage.DataSource = typeof(Entities.Notify);
             // 
-            // btnFntdlg
-            // 
-            this.btnFntdlg.Location = new System.Drawing.Point(8, 47);
-            this.btnFntdlg.Name = "btnFntdlg";
-            this.btnFntdlg.Size = new System.Drawing.Size(96, 35);
-            this.btnFntdlg.TabIndex = 1;
-            this.btnFntdlg.Text = "font setting";
-            this.btnFntdlg.UseVisualStyleBackColor = true;
-            this.btnFntdlg.Click += new System.EventHandler(this.btnFntdlg_Click);
-            // 
-            // btnLogClear
-            // 
-            this.btnLogClear.Location = new System.Drawing.Point(6, 6);
-            this.btnLogClear.Name = "btnLogClear";
-            this.btnLogClear.Size = new System.Drawing.Size(96, 35);
-            this.btnLogClear.TabIndex = 0;
-            this.btnLogClear.Text = "Clear syslog";
-            this.btnLogClear.UseVisualStyleBackColor = true;
-            this.btnLogClear.Click += new System.EventHandler(this.btnLogClear_Click);
-            // 
             // FrmMessages
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -368,6 +368,7 @@
             this.ClientSize = new System.Drawing.Size(779, 673);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnSendMessage);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmMessages";
             this.Text = "＊";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMessages_FormClosing);

@@ -23,6 +23,7 @@ namespace TaskNotify.HubProxy
         #endregion event
 
         #region Constructor
+
         /// <summary>
         /// Constructor
         /// </summary>
